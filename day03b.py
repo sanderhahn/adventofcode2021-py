@@ -5,26 +5,26 @@ def filter(lines, position, value):
     return [line for line in lines if line[position] == value]
 
 def oxygen(lines, position):
-    bit = [line[position] for line in lines]
-    if bit.count("1") >= bit.count("0"):
-        lines = filter(lines, position, "1")
-    else:
-        lines = filter(lines, position, "0")
-    if len(lines) == 1:
-        return lines[0]
-    else:
-        return oxygen(lines, position+1)
+    while True:
+        bit = [line[position] for line in lines]
+        if bit.count("1") >= bit.count("0"):
+            lines = filter(lines, position, "1")
+        else:
+            lines = filter(lines, position, "0")
+        if len(lines) == 1:
+            return lines[0]
+        position += 1
 
 def co2_scrubber(lines, position):
-    bit = [line[position] for line in lines]
-    if bit.count("1") >= bit.count("0"):
-        lines = filter(lines, position, "0")
-    else:
-        lines = filter(lines, position, "1")
-    if len(lines) == 1:
-        return lines[0]
-    else:
-        return co2_scrubber(lines, position+1)
+    while True:
+        bit = [line[position] for line in lines]
+        if bit.count("1") >= bit.count("0"):
+            lines = filter(lines, position, "0")
+        else:
+            lines = filter(lines, position, "1")
+        if len(lines) == 1:
+            return lines[0]
+        position += 1
 
 def process(lines):
     (oxygen_val, co2_scrubber_val) = (oxygen(lines, 0), co2_scrubber(lines, 0))
