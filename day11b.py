@@ -9,29 +9,28 @@ def dump_map(map):
        print("".join([str(octo) for octo in line]))
     print()
 
-def flash(map, x, y, flashed = {}):
+def flash(map, x, y, flashed):
     if x < 0 or y < 0 or x > len(map[0]) - 1 or y > len(map) - 1:
-        return flashed
+        return
     elif (x, y) in flashed:
-        return flashed
+        return
     map[y][x] += 1
     if map[y][x] > 9:
         flashed[(x, y)] = True
-        flashed = flash(map, x-1, y-1, flashed)
-        flashed = flash(map, x, y-1, flashed)
-        flashed = flash(map, x+1, y-1, flashed)
-        flashed = flash(map, x+1, y, flashed)
-        flashed = flash(map, x+1, y+1, flashed)
-        flashed = flash(map, x, y+1, flashed)
-        flashed = flash(map, x-1, y+1, flashed)
-        flashed = flash(map, x-1, y, flashed)
-    return flashed
+        flash(map, x-1, y-1, flashed)
+        flash(map, x, y-1, flashed)
+        flash(map, x+1, y-1, flashed)
+        flash(map, x+1, y, flashed)
+        flash(map, x+1, y+1, flashed)
+        flash(map, x, y+1, flashed)
+        flash(map, x-1, y+1, flashed)
+        flash(map, x-1, y, flashed)
 
 def step(map):
     flashed = {}
     for (y, row) in enumerate(map):
         for (x, _) in enumerate(row):
-            flashed = flash(map, x, y, flashed)
+            flash(map, x, y, flashed)
     for (y, row) in enumerate(map):
         for (x, _) in enumerate(row):
             if map[y][x] > 9:
